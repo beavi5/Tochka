@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "638889605451",
+    "firebase_url": "https://tochka-e640d.firebaseio.com",
+    "project_id": "tochka-e640d",
+    "storage_bucket": "tochka-e640d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638889605451:android:4cb86728dd681763",
+        "android_client_info": {
+          "package_name": "com.example.beavi5.tochka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "638889605451-gh6se220669sf4s0toma1110ld56kbk0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.beavi5.tochka",
+            "certificate_hash": "9d9c7e7131eb5084b124ed0e4b0273ce7ee9c112"
+          }
+        },
+        {
+          "client_id": "638889605451-nk2irjsohg26hfk8kkam52jprga48bg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCELIwVA0SjJe6vzAxBrfPCrnIytSLf96o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "638889605451-nk2irjsohg26hfk8kkam52jprga48bg9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

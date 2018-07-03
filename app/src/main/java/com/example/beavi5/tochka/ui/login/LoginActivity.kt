@@ -16,7 +16,7 @@ class LoginActivity : BaseActivity(), ILoginView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        presenter = LoginPresenter(this)
+        presenter = LoginPresenter(this, this)
         btnSignInGoogle.setOnClickListener {
             presenter.onGoogleSignIn()
         }
@@ -31,6 +31,7 @@ class LoginActivity : BaseActivity(), ILoginView {
 
     override fun startMainActivity() {
         startActivity(Intent(this, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+        finish()
     }
 
     override fun onError(e: Throwable) {
