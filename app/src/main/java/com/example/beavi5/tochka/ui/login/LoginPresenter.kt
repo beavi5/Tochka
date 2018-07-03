@@ -16,14 +16,13 @@ import com.vk.sdk.api.model.VKApiUserFull
 import com.vk.sdk.api.model.VKList
 import com.vk.sdk.api.model.VKScopes
 
-class LoginPresenter(val view: ILoginView): ILoginPresenter, GoogleApiClient.OnConnectionFailedListener {
-    override fun onConnectionFailed(p0: ConnectionResult) {
+class LoginPresenter(val view: ILoginView) : ILoginPresenter, GoogleApiClient.OnConnectionFailedListener {
+    var googleApiClient: GoogleApiClient
 
-    }
-
-    lateinit var googleApiClient: GoogleApiClient
-    val loginActivity = view as Activity
-    val prefs = Prefs(loginActivity)
+    private val loginActivity = view as Activity
+    private val fragmentActivity = view as FragmentActivity
+    private val prefs = Prefs(loginActivity)
+    private val RC_SIGN_IN: Int = 322
 
     init {
 
@@ -32,26 +31,28 @@ class LoginPresenter(val view: ILoginView): ILoginPresenter, GoogleApiClient.OnC
                 .build()
 
         googleApiClient = GoogleApiClient.Builder(loginActivity)
-                .enableAutoManage(loginActivity as FragmentActivity, this)
+                .enableAutoManage(fragmentActivity, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
     }
 
-    fun onGoogleSignIn(){
 
+    override fun onGoogleSignIn() {
+        signOutAll()
+        val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+        fragmentActivity.startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    fun onVkSignIn(){
+    override fun onVkSignIn() {
+        signOutAll()
         VKSdk.login(loginActivity, VKScopes.PHOTOS)
     }
 
-
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
 
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, object : VKCallback<VKAccessToken> {
                     override fun onResult(res: VKAccessToken?) {
-                        // Пользователь успешно авторизовался
                         val photoRequest = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "photo_max"))
 
                         photoRequest.executeWithListener(object : VKRequest.VKRequestListener() {
@@ -59,10 +60,10 @@ class LoginPresenter(val view: ILoginView): ILoginPresenter, GoogleApiClient.OnC
                                 super.onComplete(response)
 
                                 val user = (response.parsedModel as VKList<VKApiUserFull>)[0]
-                                val photoUrl = user.photo_max//.getString("photo_max")
+                                val photoUrl = user.photo_max
                                 prefs.photoUrl = photoUrl
                                 prefs.userName = "${user.first_name} ${user.last_name}"
-                                startMainActivity()
+                                view.startMainActivity()
 
                             }
                         })
@@ -70,20 +71,35 @@ class LoginPresenter(val view: ILoginView): ILoginPresenter, GoogleApiClient.OnC
                     }
 
                     override fun onError(error: VKError?) {
-                        // Произошла ошибка авторизации (например, пользователь запретил авторизацию)
+                        view.onError(Exception("Ошибка подключения к VK"))
                     }
                 }))
 
             if (requestCode == RC_SIGN_IN) {
                 val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-                val acct = result.signInAccount
-                acct?.photoUrl?.let {
-                    prefs.photoUrl = it.toString()
+                if (result.isSuccess) {
+                    val acct = result.signInAccount
+                    acct?.photoUrl?.let {
+                        prefs.photoUrl = it.toString()
+                    }
+                    acct?.displayName?.let {
+                        prefs.userName = it
+                    }
+
+                    view.startMainActivity()
                 }
-
-                startMainActivity()
-
             }
 
+    }
+
+    private fun signOutAll() {
+        prefs.photoUrl = ""
+        prefs.userName = ""
+        Auth.GoogleSignInApi.signOut(googleApiClient)
+        VKSdk.logout()
+    }
+
+    override fun onConnectionFailed(p0: ConnectionResult) {
+        view.onError(Exception("Ошибка подключения к Google"))
     }
 }
