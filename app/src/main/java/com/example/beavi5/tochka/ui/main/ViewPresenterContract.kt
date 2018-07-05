@@ -7,7 +7,6 @@ interface IMainView {
     fun clearRVAdapter()
 }
 interface IMainPresenter {
-//    fun onLoadMore(page:Int, searchQuery: String)
     fun onLoadMore()
     fun onSignOut()
     fun onDestroy()

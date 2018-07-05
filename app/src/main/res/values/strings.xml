@@ -2,5 +2,6 @@
     <string name="app_name">Tochka</string>
     <string name="exit">Выйти</string>
     <string name="score">Score:</string>
+    <string name="signin">Войти с помощью</string>
     <integer name="com_vk_sdk_AppId">6620003</integer>
 </resources>

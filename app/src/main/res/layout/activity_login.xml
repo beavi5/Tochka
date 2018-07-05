@@ -5,27 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
-    <!--<com.google.android.gms.common.SignInButton-->
-
-        <!--android:id="@+id/btnGoogleSignIn"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-    <!--</com.google.android.gms.common.SignInButton>-->
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ivLoginBG"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@mipmap/tochkabg" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/btnSignInVK"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -34,63 +29,65 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/common_google_signin_btn_text_dark_default"
-        android:orientation="horizontal"
-        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:background="@drawable/linearlayout_bg"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/ivLoginBG">
 
-        <TextView
+
+        <Button
+            android:id="@+id/btnSignInVK"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Войти с помощью"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_vk_gb"
+            android:drawableEnd="@drawable/ic_vk"
+            android:drawablePadding="8dp"
+            android:drawableRight="@drawable/ic_vk"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/signin"
+            tools:layout_editor_absoluteX="83dp" />
+        <Button
+            android:id="@+id/btnSignInGoogle"
+            style="@style/ButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:src="@mipmap/vkontakteicon"
-            app:layout_constraintStart_toEndOf="@+id/test_button_text2" />
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_google_gb"
+            android:drawableEnd="@drawable/ic_google"
+            android:drawablePadding="8dp"
+            android:drawableRight="@drawable/ic_google"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/signin" />
+
+
     </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/btnSignInGoogle"
+    <TextView
+        android:id="@+id/tvVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/common_google_signin_btn_text_dark_default"
-        android:orientation="horizontal"
-        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignInVK">
+        tools:text="1.0.1" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/test_button_image"
-            android:layout_toRightOf="@+id/test_button_image"
-            android:text="Войти с помощью"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/googleg_standard_color_18"
-            app:layout_constraintStart_toEndOf="@+id/test_button_text2"
-            tools:layout_editor_absoluteY="5dp" />
-    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

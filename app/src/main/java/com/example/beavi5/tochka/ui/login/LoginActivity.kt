@@ -2,6 +2,7 @@ package com.example.beavi5.tochka.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import com.example.beavi5.tochka.BuildConfig
 import com.example.beavi5.tochka.R
 import com.example.beavi5.tochka.ui.base.BaseActivity
 import com.example.beavi5.tochka.ui.main.MainActivity
@@ -17,6 +18,7 @@ class LoginActivity : BaseActivity(), ILoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         presenter = LoginPresenter(this, this)
+        tvVersion.text = "Version ${BuildConfig.VERSION_NAME}"
         btnSignInGoogle.setOnClickListener {
             presenter.onGoogleSignIn()
         }

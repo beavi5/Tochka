@@ -25,7 +25,7 @@ class MainPresenter(val view: IMainView) : IMainPresenter {
     override fun onLoadMore() {
         currentPage++
         subscription?.dispose()
-        subscription = repository.loadMore(currentPage, this.searchQuery)//.loadMore(page, searchQuery)
+        subscription = repository.loadMore(currentPage, this.searchQuery)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

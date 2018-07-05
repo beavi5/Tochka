@@ -21,8 +21,7 @@ import com.vk.sdk.api.model.VKScopes
 
 
 class LoginPresenter(val view: ILoginView, val context: Context) : ILoginPresenter, GoogleApiClient.OnConnectionFailedListener {
-    var googleApiClient: GoogleApiClient
-
+    private var googleApiClient: GoogleApiClient
     private val loginActivity = view as Activity
     private val fragmentActivity = view as FragmentActivity
     private val prefs = Prefs(loginActivity)
@@ -114,7 +113,7 @@ class LoginPresenter(val view: ILoginView, val context: Context) : ILoginPresent
         view.onError(Exception("Ошибка подключения к Google"))
     }
 
-    fun checkInternetConnection():  Boolean{
+    private fun checkInternetConnection():  Boolean{
         val cm: ConnectivityManager? = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val isConnected = cm?.activeNetworkInfo?.isConnected ?: false

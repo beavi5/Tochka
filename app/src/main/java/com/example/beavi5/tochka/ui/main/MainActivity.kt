@@ -121,7 +121,7 @@ class MainActivity : BaseActivity(), IMainView, NavigationView.OnNavigationItemS
        searchViewItem.setOnMenuItemClickListener { ivSearchArrow.visibility = View.GONE
        true}
         val searchView = searchViewItem.actionView as SearchView
-        searchSubscription = RxSearchView.queryTextChanges(searchView).debounce(500, TimeUnit.MILLISECONDS)
+        searchSubscription = RxSearchView.queryTextChanges(searchView).debounce(600, TimeUnit.MILLISECONDS)
                 .map(CharSequence::toString)
                 .filter { it.isNotEmpty() }
                 .observeOn(AndroidSchedulers.mainThread())
