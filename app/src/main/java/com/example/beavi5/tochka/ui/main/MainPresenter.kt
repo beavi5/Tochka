@@ -3,24 +3,19 @@ package com.example.beavi5.tochka.ui.main
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class MainPresenter(val view: IMainView) : IMainPresenter {
+class MainPresenter @Inject constructor(val view: IMainView, val repository: GitHubRepo) : IMainPresenter {
     private var searchQuery: String = ""
-
     private var currentPage: Int = 1
+    private var subscription: Disposable? = null
 
     override fun onSearchQuery(searchText: String) {
         searchQuery = searchText
         currentPage = 1
         view.clearRVAdapter()
-
         onLoadMore()
-
     }
-
-    var subscription: Disposable? = null
-    val repository = GitHubRepo()
-
 
     override fun onLoadMore() {
         currentPage++
@@ -30,7 +25,8 @@ class MainPresenter(val view: IMainView) : IMainPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     view.onMoreLoaded(it.map {
-                        UserPM(it.avatarUrl ?: "", it.login ?: "", it.score ?: 0.0, it.url ?:"https://github.com/")
+                        UserPM(it.avatarUrl ?: "", it.login ?: "", it.score ?: 0.0, it.url
+                                ?: "https://github.com/")
                     })
                 },
                         { view.onError(it) })

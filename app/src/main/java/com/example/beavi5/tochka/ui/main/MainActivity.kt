@@ -12,7 +12,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.beavi5.tochka.App
 import com.example.beavi5.tochka.R
+import com.example.beavi5.tochka.di.main.MainActivityModule
 import com.example.beavi5.tochka.ui.base.BaseActivity
 import com.example.beavi5.tochka.ui.base.RecyclerViewDivider
 import com.example.beavi5.tochka.ui.login.LoginActivity
@@ -24,29 +26,36 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 class MainActivity : BaseActivity(), IMainView, NavigationView.OnNavigationItemSelectedListener {
 
-    override fun clearRVAdapter() {
-        rvAdapter.clear()
-    }
+    @Inject
+    lateinit var presenter: IMainPresenter
+
+    @Inject
+    lateinit var prefs: Prefs
 
     private var isLoading = false
-
-    private lateinit var presenter: IMainPresenter
-    private lateinit var prefs: Prefs
     private lateinit var rvAdapter: RVGitHubAdapter
     private lateinit var searchSubscription: Disposable
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefs = Prefs(this)
-        presenter = MainPresenter(this)
         setContentView(R.layout.activity_main)
         initActionBar()
         initRecyclerView()
         initNavigationView()
+    }
+
+    override fun setupActivityComponent() {
+        App.getAppComponent()
+                .add(MainActivityModule(this))
+                .inject(this)
+    }
+
+    override fun clearRVAdapter() {
+        rvAdapter.clear()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

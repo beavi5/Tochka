@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.support.v4.app.FragmentActivity
 import android.util.Log
+import com.example.beavi5.tochka.App
 import com.example.beavi5.tochka.utils.Prefs
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -18,13 +19,13 @@ import com.vk.sdk.api.*
 import com.vk.sdk.api.model.VKApiUserFull
 import com.vk.sdk.api.model.VKList
 import com.vk.sdk.api.model.VKScopes
+import javax.inject.Inject
 
 
-class LoginPresenter(val view: ILoginView, val context: Context) : ILoginPresenter, GoogleApiClient.OnConnectionFailedListener {
+class LoginPresenter @Inject constructor(val view: ILoginView, val context: Context, val prefs: Prefs) : ILoginPresenter, GoogleApiClient.OnConnectionFailedListener {
     private var googleApiClient: GoogleApiClient
     private val loginActivity = view as Activity
     private val fragmentActivity = view as FragmentActivity
-    private val prefs = Prefs(loginActivity)
     private val RC_SIGN_IN: Int = 322
 
     init {
@@ -103,9 +104,8 @@ class LoginPresenter(val view: ILoginView, val context: Context) : ILoginPresent
         try {
             Auth.GoogleSignInApi.signOut(googleApiClient)
             VKSdk.logout()
-        }
-        catch (e: Exception){
-         Log.d("signOut", "SignOut exception on method signOutAll")
+        } catch (e: Exception) {
+            Log.d("signOut", "SignOut exception on method signOutAll")
         }
     }
 
@@ -113,13 +113,13 @@ class LoginPresenter(val view: ILoginView, val context: Context) : ILoginPresent
         view.onError(Exception("Ошибка подключения к Google"))
     }
 
-    private fun checkInternetConnection():  Boolean{
+    private fun checkInternetConnection(): Boolean {
         val cm: ConnectivityManager? = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val isConnected = cm?.activeNetworkInfo?.isConnected ?: false
-       if (!isConnected){
-           view.onError(Error("Нет подключения к интернету!"))
-       }
+        if (!isConnected) {
+            view.onError(Error("Нет подключения к интернету!"))
+        }
         return isConnected
     }
 }

@@ -8,6 +8,6 @@ import retrofit2.http.Query
 
 
 interface GitHubService {
-        @GET("search/users")
-        fun listRepos(@Query("q") searchQuery: String, @Query("page") page: Int): Observable<UserList>
+    @GET("search/users")
+    fun listRepos(@Query("q") searchQuery: String, @Query("page") page: Int): Observable<UserList>
 }

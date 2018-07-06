@@ -1,9 +1,9 @@
-package com.example.beavi5.tochka.di
+package com.example.beavi5.tochka.di.app
 
+import com.example.beavi5.tochka.networks.GitHubService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import com.example.beavi5.tochka.networks.GitHubService
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
