@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.support.v4.app.FragmentActivity
 import android.util.Log
-import com.example.beavi5.tochka.App
 import com.example.beavi5.tochka.utils.Prefs
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -19,10 +18,8 @@ import com.vk.sdk.api.*
 import com.vk.sdk.api.model.VKApiUserFull
 import com.vk.sdk.api.model.VKList
 import com.vk.sdk.api.model.VKScopes
-import javax.inject.Inject
 
-
-class LoginPresenter @Inject constructor(val view: ILoginView, val context: Context, val prefs: Prefs) : ILoginPresenter, GoogleApiClient.OnConnectionFailedListener {
+class LoginPresenter (val view: ILoginView, val context: Context, val prefs: Prefs) : ILoginPresenter, GoogleApiClient.OnConnectionFailedListener {
     private var googleApiClient: GoogleApiClient
     private val loginActivity = view as Activity
     private val fragmentActivity = view as FragmentActivity

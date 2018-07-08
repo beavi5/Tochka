@@ -3,9 +3,8 @@ package com.example.beavi5.tochka.ui.main
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-class MainPresenter @Inject constructor(val view: IMainView, val repository: GitHubRepo) : IMainPresenter {
+class MainPresenter (val view: IMainView, val repository: GitHubRepo) : IMainPresenter {
     private var searchQuery: String = ""
     private var currentPage: Int = 1
     private var subscription: Disposable? = null
